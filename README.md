@@ -1,35 +1,68 @@
-# ktor-sample
+# API для работы со статьями
 
-This project was created using the [Ktor Project Generator](https://start.ktor.io).
+Учебный проект на Kotlin с использованием фреймворка Ktor. Создан в рамках контрольной точки КТ1 «Базовое API» по предмету «Кроссплатформенная разработка на языке Kotlin».
 
-Here are some useful links to get you started:
- * [Ktor Documentation](https://ktor.io/docs/home.html)
- * [Ktor GitHub page](https://github.com/ktorio/ktor)
- * [Ktor Slack chat](https://app.slack.com/client/T09229ZC6/C0A974TJ9). [Request an invite](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up).
+## Возможности
 
+- Получение списка статей (`GET /articles`).
+- Сортировка статей через query-параметр `sort`: `old` или `new`.
+- Получение статьи по ID (`GET /articles/{id}`).
+- Создание статьи (`POST /articles`).
+- Удаление статьи (`DELETE /articles/{id}`).
+- Обработка параметров запроса и формирование JSON-ответов.
+- Обработка ошибок с соответствующими HTTP-статусами.
 
-## Features
-Here's a list of features included in this project:
+## Используемые технологии
 
-| Name | Description |
-|------|-------------|
-| [Content Negotiation](https://start.ktor.io/p/io.ktor/server-content-negotiation) | Provides automatic content conversion according to Content-Type and Accept headers |
-| [kotlinx.serialization](https://start.ktor.io/p/io.ktor/server-kotlinx-serialization) | Handles JSON serialization using kotlinx.serialization library |
-| [Resources](https://start.ktor.io/p/io.ktor/server-resources) | Provides type-safe routing |
+- Kotlin
+- Ktor
+- Gradle
+- Content Negotiation
+- kotlinx.serialization
+- JSON
 
+## Запуск проекта
 
-## Building & Running
-To build or run the project, use one of the following tasks:
+Для работы необходим JDK 21.
 
+Запустите сервер из папки проекта командой:
 
-| Task | Description |
-|------|-------------|
-| `./gradlew test`    | Run the tests     |
-| `./gradlew build`   | Build the project |
-| `./gradlew run`     | Run the server    |
-
-If the server starts successfully, you'll see the following output:
+```bash
+./gradlew run
 ```
-2024-12-04 14:32:45.584 [main] INFO  Application - Application started in 0.303 seconds.
-2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
+
+После успешного запуска сервер будет доступен по адресу:
+
+http://localhost:8080
+
+## Проверка API
+
+Получить список статей:
+
+```bash
+curl http://localhost:8080/articles
 ```
+
+Получить статью с ID 1:
+
+```bash
+curl http://localhost:8080/articles/1
+```
+
+Создать статью:
+
+```bash
+curl -X POST http://localhost:8080/articles \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Моя статья","content":"Текст статьи"}'
+```
+
+Удалить статью с ID 1:
+
+```bash
+curl -X DELETE http://localhost:8080/articles/1
+```
+
+## Хранение данных
+
+Статьи хранятся в памяти приложения. После перезапуска сервера список возвращается к исходному состоянию.
